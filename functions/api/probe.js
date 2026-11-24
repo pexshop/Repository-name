@@ -4,7 +4,17 @@ const TARGETS = {
   ipify: "https://api.ipify.org?format=json",
   ipapi: "https://ipapi.co/json/",
   doh_cloudflare: "https://cloudflare-dns.com/dns-query?name=example.com&type=A",
-  doh_google: "https://dns.google/resolve?name=example.com&type=A"
+  doh_google: "https://dns.google/resolve?name=example.com&type=A",
+
+  status_github: "https://api.githubstatus.com/api/v2/status.json",
+  status_openai: "https://status.openai.com/api/v2/status.json",
+  status_cloudflare: "https://status.cloudflare.com/api/v2/status.json",
+  status_discord: "https://discordstatus.com/api/v2/status.json",
+  status_slack: "https://slack-status.com/api/v2/status.json",
+  status_stripe: "https://status.stripe.com/api/v2/status.json",
+  status_atlassian: "https://status.atlassian.com/api/v2/status.json",
+  status_render: "https://status.render.com/api/v2/status.json",
+  status_vercel: "https://www.vercel-status.com/api/v2/status.json"
 };
 function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:{"content-type":"application/json; charset=utf-8","cache-control":"no-store, max-age=0","x-content-type-options":"nosniff"}})}
 export async function onRequest({request}){
