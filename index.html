@@ -8,6 +8,10 @@
 :root{color-scheme:dark;--bg:#09111f;--panel:#111d30;--panel2:#17263d;--line:#293b56;--text:#eef5ff;--muted:#9aacc5;--blue:#67a9ff;--green:#4adeaa;--red:#ff7886;--amber:#f5c76e}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#1c3b68 0,transparent 48%),var(--bg);color:var(--text);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,select{font:inherit}button{cursor:pointer}.wrap{max-width:900px;margin:auto;padding:0 16px 50px}.hero{padding:28px 0 22px}.brand{display:flex;align-items:center;gap:10px;color:#bed0e8;font-size:12px;font-weight:800;letter-spacing:1.3px}.logo{display:grid;place-items:center;width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,#62b2ff,#285fc4);font-size:20px;color:#fff}.hero h1{font-size:clamp(27px,7vw,39px);line-height:1.12;letter-spacing:-.8px;margin:22px 0 9px}.hero p{margin:0;color:var(--muted);max-width:640px}.status{display:flex;align-items:center;gap:8px;margin-top:17px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #4adeaa66}.section{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:26px 0 12px}.section h2{font-size:17px;margin:0}.section p{font-size:12px;color:var(--muted);margin:3px 0 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.panel{background:linear-gradient(155deg,#15243a,#101a2a);border:1px solid var(--line);border-radius:17px;padding:15px;min-width:0}.metric{min-height:128px}.metric .ico{font-size:20px}.metric h3{font-size:13px;margin:9px 0 3px}.metric p{font-size:11px;color:var(--muted);margin:0}.value{font-size:17px;font-weight:750;overflow-wrap:anywhere;margin-top:8px}.sub{font-size:11px;color:var(--muted);overflow-wrap:anywhere}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:13px}.btn{border:1px solid #3a5273;background:#1b2d48;color:#edf5ff;border-radius:11px;padding:10px 14px;font-size:13px;font-weight:700}.btn.primary{background:linear-gradient(135deg,#398df4,#245fbd);border-color:#478fe9}.btn:disabled{opacity:.55;cursor:wait}.muted{font-size:12px;color:var(--muted)}.service-list{display:grid;gap:8px}.service{display:flex;align-items:center;gap:11px;padding:11px;border:1px solid var(--line);border-radius:12px;background:#0e1929}.service-icon{width:33px;height:33px;border-radius:10px;background:#1b2b43;display:grid;place-items:center;flex:none}.service-main{flex:1;min-width:0}.service-main b{display:block;font-size:13px}.service-main small{display:block;font-size:11px;color:var(--muted);overflow-wrap:anywhere}.pill{white-space:nowrap;border-radius:99px;padding:4px 8px;font-size:11px;background:#29364a;color:#c8d5e8}.pill.ok{background:#123d32;color:#7ce8c0}.pill.bad{background:#48232b;color:#ff9aa4}.pill.wait{background:#3c321e;color:#f6d58d}.result{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;color:#dce8f8;min-height:35px}.select{width:100%;margin:9px 0;padding:11px;border-radius:10px;border:1px solid var(--line);background:#0d1828;color:var(--text)}.notice{border:1px solid #66502a;background:#2a241a;color:#e8d2a4;border-radius:12px;padding:12px;font-size:12px;margin-top:12px}.compare{display:grid;grid-template-columns:1fr 1fr;gap:9px}.compare .panel{padding:12px}.compare h3{font-size:13px;margin:0 0 8px}.foot{text-align:center;color:#71839e;font-size:11px;padding:28px 0 10px}
 @media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{padding-top:38px}.metric{min-height:145px}}
+
+/* External service monitor */
+.external-form{display:grid;grid-template-columns:1fr;gap:9px;margin:12px 0}.field{width:100%;min-width:0;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0d1828;color:var(--text);font:inherit}.external-grid{display:grid;grid-template-columns:1fr;gap:8px}.external-item{border:1px solid var(--line);border-radius:12px;background:#0e1929;padding:12px;display:flex;gap:10px;align-items:flex-start}.external-item .service-main{flex:1;min-width:0}.external-item b{font-size:13px}.external-item small{display:block;color:var(--muted);font-size:11px;overflow-wrap:anywhere}.external-item .pill{margin-left:auto}.external-tools{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.external-tools .btn{padding:7px 10px;font-size:11px}.mini{font-size:11px;color:var(--muted)}@media(min-width:650px){.external-form{grid-template-columns:1fr 2fr auto}.external-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 </style>
 </head>
 <body><main class="wrap">
@@ -33,12 +37,19 @@
 <div class="actions"><button class="btn primary" onclick="compareSnapshots()">比较变化</button></div><div class="result" id="comparison" style="margin-top:12px">保存两次状态后即可比较公网 IP 和连接耗时。</div>
 <div class="muted">提示：请自行在 iPhone VPN 设置或 VPN 应用中切换连接状态。网页不能替你开关 VPN。</div>
 </section>
-<div class="section"><div><h2>公共服务连通性</h2><p>通过本站 Cloudflare Pages 后端检测</p></div><span class="pill" id="serviceSummary">未检测</span></div>
+<div class="section"><div><h2>第三方 API、服务器与网络服务</h2><p>检查服务商状态页，并添加你自己的公开检测地址</p></div><span class="pill" id="serviceSummary">未检测</span></div>
 <section class="panel">
-<div class="service-list" id="services">
-<div class="service"><span class="service-icon">☁️</span><div class="service-main"><b>Cloudflare</b><small>www.cloudflare.com · HTTPS / 边缘网络</small></div><span class="pill">待检测</span></div><div class="service"><span class="service-icon">🔎</span><div class="service-main"><b>Google</b><small>www.google.com · HTTPS 可达性</small></div><span class="pill">待检测</span></div><div class="service"><span class="service-icon">🌍</span><div class="service-main"><b>ipify</b><small>api.ipify.org · 公网 IP 查询</small></div><span class="pill">待检测</span></div><div class="service"><span class="service-icon">📍</span><div class="service-main"><b>ipapi</b><small>ipapi.co · IP 地理信息</small></div><span class="pill">待检测</span></div><div class="service"><span class="service-icon">🧭</span><div class="service-main"><b>Cloudflare DNS</b><small>cloudflare-dns.com · DNS over HTTPS</small></div><span class="pill">待检测</span></div><div class="service"><span class="service-icon">🧭</span><div class="service-main"><b>Google DNS</b><small>dns.google · DNS over HTTPS</small></div><span class="pill">待检测</span></div>
-</div><div class="actions"><button class="btn primary" id="servicesBtn" onclick="runServices()">检测全部 6 项</button></div>
-<p class="muted">这是从 Cloudflare Pages 后端所在边缘环境发起的检测，不是全球多地区 VPN 节点探测。</p>
+<div class="muted">预置服务商状态 API（由本站 Pages 后端请求，不受浏览器跨域限制）</div>
+<div class="service-list" id="services"></div>
+<div class="actions"><button class="btn primary" id="servicesBtn" onclick="runServices()">检测全部第三方服务</button></div>
+<div class="divider"></div>
+<div style="margin-top:20px"><b>添加自定义 API / 服务器 / 网络服务</b><p class="muted">填写公开 HTTPS 检测地址，例如服务商的 health、healthz、status 或公开 JSON API。仅发送 GET 请求，不填写密钥、令牌或密码。</p>
+<div class="external-form"><input class="field" id="customName" maxlength="48" placeholder="服务名称，例如 My API"><input class="field" id="customUrl" type="url" inputmode="url" placeholder="https://example.com/health"><button class="btn primary" onclick="addCustomEndpoint()">添加</button></div>
+<div class="external-grid" id="customServices"></div>
+<div class="external-tools"><button class="btn" onclick="checkCustomEndpoints()">检测自定义服务</button><button class="btn" onclick="clearCustomEndpoints()">清空自定义列表</button></div>
+<p class="mini">自定义地址由你的 iPhone 浏览器直接访问。目标服务器必须允许跨域（CORS），否则即使服务器在线，浏览器也可能无法读取结果。TCP/UDP 端口、SSH、数据库私有端口不能由网页通用检测。</p>
+</div>
+<div class="notice">服务商状态 API 检查的是供应商公开报告的整体服务状态；自定义地址检查的是你填写的 HTTPS 接口是否响应。两者都不等同于你的 VPN 节点或账号实际可用。</div>
 </section>
 <div class="section"><div><h2>浏览器连接耗时</h2><p>不是 ICMP Ping，也不是 VPN 节点延迟</p></div></div>
 <section class="panel"><div class="result" id="latencyResult">尚未测试</div><div class="actions"><button class="btn" onclick="testLatency()">测试 Cloudflare / Google</button></div></section>
@@ -61,7 +72,7 @@
 </main>
 <script>
 const $=id=>document.getElementById(id);let snapshots={before:null,after:null},report=[];
-const services=[{id:"cloudflare",name:"Cloudflare",icon:"☁️",host:"www.cloudflare.com"},{id:"google",name:"Google",icon:"🔎",host:"www.google.com"},{id:"ipify",name:"ipify",icon:"🌍",host:"api.ipify.org"},{id:"ipapi",name:"ipapi",icon:"📍",host:"ipapi.co"},{id:"doh_cloudflare",name:"Cloudflare DNS",icon:"🧭",host:"cloudflare-dns.com"},{id:"doh_google",name:"Google DNS",icon:"🧭",host:"dns.google"}];
+const services=[{id:"status_github",name:"GitHub",icon:"🐙",host:"api.githubstatus.com"},{id:"status_openai",name:"OpenAI",icon:"🤖",host:"status.openai.com"},{id:"status_cloudflare",name:"Cloudflare",icon:"☁️",host:"status.cloudflare.com"},{id:"status_discord",name:"Discord",icon:"💬",host:"discordstatus.com"},{id:"status_slack",name:"Slack",icon:"🟣",host:"slack-status.com"},{id:"status_stripe",name:"Stripe",icon:"💳",host:"status.stripe.com"},{id:"status_atlassian",name:"Atlassian",icon:"🔧",host:"status.atlassian.com"},{id:"status_render",name:"Render",icon:"🚀",host:"status.render.com"},{id:"status_vercel",name:"Vercel",icon:"▲",host:"www.vercel-status.com"}];
 const stamp=()=>new Date().toLocaleString();
 function status(s){$("appStatus").textContent=s}
 async function fetchTimed(url,options={}){const c=new AbortController(),timer=setTimeout(()=>c.abort(),9000),start=performance.now();try{const response=await fetch(url,{...options,signal:c.signal,cache:"no-store"});return {response,ms:Math.round(performance.now()-start)}}finally{clearTimeout(timer)}}
@@ -103,5 +114,35 @@ slow:"• 对比 VPN 前后 HTTPS 请求耗时。\n• 检查网络信号和后�
 ip:"• 重新查询公网 IPv4。\n• 检查 VPN 是否启用了分流。\n• 确保 Safari 流量经过 VPN。\n• 向服务商确认出口 IP 策略。",
 dns:"• 检查 VPN 应用内 DNS 保护设置。\n• 检查 iPhone 自定义 DNS / 内容过滤器。\n• 使用可信 DNS 泄漏测试复核。\n• 本网页无法读取系统 DNS 配置。",
 mobile:"• 确认 VPN 应用允许使用蜂窝数据。\n• 检查移动数据本身是否可上网。\n• 开关飞行模式后重新连接。\n• 对比 Wi-Fi 与蜂窝网络结果。"};$("advice").textContent=tips[$("issue").value]}
+
+const CUSTOM_KEY="vpsa_custom_endpoints_v1";
+function getCustomEndpoints(){try{return JSON.parse(localStorage.getItem(CUSTOM_KEY)||"[]").filter(x=>x&&typeof x.name==="string"&&typeof x.url==="string")}catch(e){return []}}
+function saveCustomEndpoints(items){localStorage.setItem(CUSTOM_KEY,JSON.stringify(items))}
+function addCustomEndpoint(){
+ const name=$("customName").value.trim(),raw=$("customUrl").value.trim();
+ if(!name||!raw){alert("请填写服务名称和 HTTPS 地址");return}
+ let u;try{u=new URL(raw)}catch(e){alert("网址格式无效");return}
+ if(u.protocol!=="https:"){alert("为安全起见，只允许 HTTPS 地址");return}
+ if(u.username||u.password){alert("网址中不能包含用户名或密码");return}
+ const list=getCustomEndpoints();if(list.some(x=>x.url===u.href)){alert("这个地址已经添加");return}
+ list.push({id:"c"+Date.now(),name,url:u.href});saveCustomEndpoints(list);$("customName").value="";$("customUrl").value="";renderCustomEndpoints();
+}
+function renderCustomEndpoints(results={}){
+ const list=getCustomEndpoints();$("customServices").innerHTML=list.length?list.map(x=>{const r=results[x.id]||{};return '<div class="external-item"><div class="service-main"><b>'+esc(x.name)+'</b><small>'+esc(x.url)+'</small><small>'+esc(r.detail||"尚未检测")+'</small></div><span class="pill '+(r.state||"")+'">'+(r.label||"待检测")+'</span><div class="external-tools"><button class="btn" onclick="checkOneCustom(\''+x.id+'\')">检测</button><button class="btn" onclick="removeCustomEndpoint(\''+x.id+'\')">删除</button></div></div>'}).join(""):'<p class="muted">还没有自定义服务。添加公开 HTTPS health/status/API 地址后即可检测。</p>';
+}
+function removeCustomEndpoint(id){saveCustomEndpoints(getCustomEndpoints().filter(x=>x.id!==id));renderCustomEndpoints()}
+function clearCustomEndpoints(){if(!confirm("确定清空所有自定义检测地址？"))return;saveCustomEndpoints([]);renderCustomEndpoints()}
+async function checkOneCustom(id){
+ const item=getCustomEndpoints().find(x=>x.id===id);if(!item)return;
+ const results={};results[id]={state:"wait",label:"检测中",detail:"请求中"};renderCustomEndpoints(results);
+ const started=performance.now();
+ try{const c=new AbortController(),t=setTimeout(()=>c.abort(),8000);let res;try{res=await fetch(item.url,{method:"GET",mode:"cors",cache:"no-store",redirect:"follow",signal:c.signal,headers:{accept:"application/json,text/plain,*/*"}})}finally{clearTimeout(t)}
+ const ms=Math.round(performance.now()-started);results[id]={state:res.ok?"ok":"bad",label:res.ok?"在线":"HTTP "+res.status,detail:"HTTP "+res.status+" · "+ms+" ms · "+stamp()};report.push("自定义服务 "+item.name+" "+res.status+" "+ms+"ms");
+ }catch(e){results[id]={state:"bad",label:e.name==="AbortError"?"超时":"无法读取",detail:(e.message||"网络错误")+"；可能是 CORS 限制或服务不可达"}}
+ renderCustomEndpoints(results);
+}
+async function checkCustomEndpoints(){const list=getCustomEndpoints();if(!list.length){alert("请先添加自定义 HTTPS 服务地址");return}for(const x of list)await checkOneCustom(x.id)}
+renderCustomEndpoints();
+
 function exportReport(){const content=["VPN Super Assistant 报告","导出时间："+stamp(),"",...(report.length?report:["尚无检测记录"]),"","说明：浏览器与边缘服务检测不代表 VPN 私有节点状态。"].join("\n");const u=URL.createObjectURL(new Blob([content],{type:"text/plain;charset=utf-8"}));const a=document.createElement("a");a.href=u;a.download="vpn-diagnostic-report.txt";a.click();URL.revokeObjectURL(u)}
 </script></body></html>
