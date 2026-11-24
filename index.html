@@ -1,143 +1,107 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b1220">
-<meta name="description" content="VPN Super Assistant 网络诊断面板：公网 IP、IPv4/IPv6、HTTPS 连通性和外部服务检测。">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220"><meta name="description" content="VPN 网络诊断：公网 IP、IPv4/IPv6、HTTPS 延迟、WebRTC 和公共服务连通性。">
 <title>VPN Super Assistant</title>
 <style>
-:root{color-scheme:dark;--bg:#0b1220;--panel:#121d30;--panel2:#17243a;--line:#263750;--text:#edf4ff;--muted:#9aabc2;--blue:#66a5ff;--green:#43d39e;--red:#ff727e;--amber:#f6c76b}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#1c3760 0,transparent 48%),var(--bg);color:var(--text);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-button,select{font:inherit}button{cursor:pointer}.wrap{max-width:920px;margin:auto;padding:0 16px 48px}.top{padding:28px 0 20px}.brand{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:1.5px;color:#b9cbe5;font-weight:800}.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#5ca7ff,#2862c8);display:grid;place-items:center;color:white;font-size:19px}.top h1{font-size:clamp(26px,6vw,38px);line-height:1.15;margin:22px 0 8px;letter-spacing:-.8px}.top p{margin:0;color:var(--muted);max-width:620px}.statusline{display:flex;align-items:center;gap:8px;margin-top:18px;font-size:12px;color:var(--muted)}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #43d39e66}.section{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:26px 0 12px}.section h2{font-size:17px;margin:0}.section p{font-size:12px;color:var(--muted);margin:2px 0 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.panel{background:linear-gradient(160deg,#15233a,#111b2c);border:1px solid var(--line);border-radius:17px;padding:16px;min-width:0}.metric{min-height:135px}.metric .icon{font-size:20px}.metric h3{font-size:14px;margin:10px 0 3px}.metric p{font-size:12px;color:var(--muted);margin:0}.value{font-size:17px;font-weight:750;overflow-wrap:anywhere;margin-top:10px}.subvalue{font-size:11px;color:var(--muted);overflow-wrap:anywhere}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.btn{border:1px solid #385276;background:#1b2d48;color:#eaf3ff;padding:10px 14px;border-radius:11px;font-weight:700;font-size:13px}.btn.primary{background:linear-gradient(135deg,#3988ef,#2563c7);border-color:#438be7;color:white}.btn:disabled{opacity:.5;cursor:wait}.service-list{display:grid;gap:9px}.service{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:13px;background:#101a2a}.service-icon{width:34px;height:34px;border-radius:10px;background:#1c2c44;display:grid;place-items:center;flex:none}.service-main{flex:1;min-width:0}.service-main b{display:block;font-size:13px}.service-main small{display:block;color:var(--muted);font-size:11px;overflow-wrap:anywhere}.pill{font-size:11px;padding:4px 8px;border-radius:99px;background:#29364a;color:#c5d2e4;white-space:nowrap}.pill.ok{background:#123c32;color:#78e6bd}.pill.bad{background:#49232c;color:#ff9aa3}.pill.wait{background:#3c321d;color:#f6d58c}.result{white-space:pre-wrap;overflow-wrap:anywhere;color:#dce8f8;font-size:13px;min-height:42px}.muted{color:var(--muted);font-size:12px}.select{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:#0e1929;color:var(--text);margin:10px 0}.notice{border:1px solid #66502a;background:#2b2418;color:#e9d2a2;padding:12px;border-radius:12px;font-size:12px;margin-top:12px}.foot{color:#72839c;font-size:11px;text-align:center;padding:28px 0 8px}.hide{display:none!important}
-@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.top{padding-top:38px}.metric{min-height:150px}}
+:root{color-scheme:dark;--bg:#09111f;--panel:#111d30;--panel2:#17263d;--line:#293b56;--text:#eef5ff;--muted:#9aacc5;--blue:#67a9ff;--green:#4adeaa;--red:#ff7886;--amber:#f5c76e}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#1c3b68 0,transparent 48%),var(--bg);color:var(--text);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,select{font:inherit}button{cursor:pointer}.wrap{max-width:900px;margin:auto;padding:0 16px 50px}.hero{padding:28px 0 22px}.brand{display:flex;align-items:center;gap:10px;color:#bed0e8;font-size:12px;font-weight:800;letter-spacing:1.3px}.logo{display:grid;place-items:center;width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,#62b2ff,#285fc4);font-size:20px;color:#fff}.hero h1{font-size:clamp(27px,7vw,39px);line-height:1.12;letter-spacing:-.8px;margin:22px 0 9px}.hero p{margin:0;color:var(--muted);max-width:640px}.status{display:flex;align-items:center;gap:8px;margin-top:17px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #4adeaa66}.section{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:26px 0 12px}.section h2{font-size:17px;margin:0}.section p{font-size:12px;color:var(--muted);margin:3px 0 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.panel{background:linear-gradient(155deg,#15243a,#101a2a);border:1px solid var(--line);border-radius:17px;padding:15px;min-width:0}.metric{min-height:128px}.metric .ico{font-size:20px}.metric h3{font-size:13px;margin:9px 0 3px}.metric p{font-size:11px;color:var(--muted);margin:0}.value{font-size:17px;font-weight:750;overflow-wrap:anywhere;margin-top:8px}.sub{font-size:11px;color:var(--muted);overflow-wrap:anywhere}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:13px}.btn{border:1px solid #3a5273;background:#1b2d48;color:#edf5ff;border-radius:11px;padding:10px 14px;font-size:13px;font-weight:700}.btn.primary{background:linear-gradient(135deg,#398df4,#245fbd);border-color:#478fe9}.btn:disabled{opacity:.55;cursor:wait}.muted{font-size:12px;color:var(--muted)}.service-list{display:grid;gap:8px}.service{display:flex;align-items:center;gap:11px;padding:11px;border:1px solid var(--line);border-radius:12px;background:#0e1929}.service-icon{width:33px;height:33px;border-radius:10px;background:#1b2b43;display:grid;place-items:center;flex:none}.service-main{flex:1;min-width:0}.service-main b{display:block;font-size:13px}.service-main small{display:block;font-size:11px;color:var(--muted);overflow-wrap:anywhere}.pill{white-space:nowrap;border-radius:99px;padding:4px 8px;font-size:11px;background:#29364a;color:#c8d5e8}.pill.ok{background:#123d32;color:#7ce8c0}.pill.bad{background:#48232b;color:#ff9aa4}.pill.wait{background:#3c321e;color:#f6d58d}.result{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;color:#dce8f8;min-height:35px}.select{width:100%;margin:9px 0;padding:11px;border-radius:10px;border:1px solid var(--line);background:#0d1828;color:var(--text)}.notice{border:1px solid #66502a;background:#2a241a;color:#e8d2a4;border-radius:12px;padding:12px;font-size:12px;margin-top:12px}.compare{display:grid;grid-template-columns:1fr 1fr;gap:9px}.compare .panel{padding:12px}.compare h3{font-size:13px;margin:0 0 8px}.foot{text-align:center;color:#71839e;font-size:11px;padding:28px 0 10px}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{padding-top:38px}.metric{min-height:145px}}
 </style>
 </head>
-<body>
-<main class="wrap">
-<header class="top">
+<body><main class="wrap">
+<header class="hero">
 <div class="brand"><span class="logo">⌁</span> VPN SUPER ASSISTANT <span class="pill">FREE</span></div>
-<h1>网络状态，一眼看清。</h1>
-<p>检查当前网络出口、IP 协议和常用公共服务连通性。无需 VPN 账号或密码。</p>
-<div class="statusline"><span class="dot"></span><span id="appStatus">诊断面板已就绪</span></div>
+<h1>看清 VPN 前后的网络变化。</h1>
+<p>检测公网出口、IPv4 / IPv6、浏览器连接质量和公共服务可达性。无需提供 VPN 账号、密码或订阅链接。</p>
+<div class="status"><span class="dot"></span><span id="appStatus">诊断面板已就绪</span></div>
 </header>
-
-<div class="section"><div><h2>快速诊断</h2><p>检测由当前 iPhone 浏览器发起</p></div></div>
+<div class="section"><div><h2>当前网络状态</h2><p>以下检测由你的 iPhone Safari 发起</p></div></div>
 <section class="grid">
-<article class="panel metric"><div class="icon">🌐</div><h3>公网 IPv4</h3><p>当前网络出口地址</p><div class="value" id="ipv4">尚未检测</div><div class="subvalue" id="ipMeta"></div></article>
-<article class="panel metric"><div class="icon">🔢</div><h3>IPv6 连通性</h3><p>测试 IPv6 公共出口</p><div class="value" id="ipv6">尚未检测</div><div class="subvalue" id="ipv6Meta"></div></article>
-<article class="panel metric"><div class="icon">⚡</div><h3>HTTPS 连通性</h3><p>浏览器访问公共端点</p><div class="value" id="httpsState">尚未检测</div><div class="subvalue" id="httpsMeta"></div></article>
+<article class="panel metric"><div class="ico">🌐</div><h3>公网 IPv4</h3><p>当前网络出口地址</p><div class="value" id="ipv4">尚未检测</div><div class="sub" id="ipv4Sub"></div></article>
+<article class="panel metric"><div class="ico">🔢</div><h3>IPv6</h3><p>IPv6 公共出口可达性</p><div class="value" id="ipv6">尚未检测</div><div class="sub" id="ipv6Sub"></div></article>
+<article class="panel metric"><div class="ico">⚡</div><h3>HTTPS 连通性</h3><p>访问公共 HTTPS 端点</p><div class="value" id="https">尚未检测</div><div class="sub" id="httpsSub"></div></article>
 </section>
-<div class="actions">
-<button class="btn primary" id="quickBtn" onclick="runQuick()">运行快速诊断</button>
-<button class="btn" onclick="runServices()">检测外部服务</button>
-<button class="btn" onclick="exportReport()">导出报告</button>
+<div class="actions"><button class="btn primary" id="quickBtn" onclick="runQuick()">运行快速诊断</button><button class="btn" onclick="runServices()">检测外部服务</button><button class="btn" onclick="testWebRTC()">WebRTC 地址检查</button><button class="btn" onclick="exportReport()">导出报告</button></div>
+<div class="section"><div><h2>VPN 前后对比</h2><p>先断开 VPN 保存一次，再连接 VPN 保存一次</p></div></div>
+<section class="panel">
+<div class="compare">
+<div class="panel"><h3>① 未连接 VPN</h3><div class="result" id="before">尚未保存</div><button class="btn" id="beforeBtn" onclick="saveSnapshot('before')">保存当前状态</button></div>
+<div class="panel"><h3>② 已连接 VPN</h3><div class="result" id="after">尚未保存</div><button class="btn" id="afterBtn" onclick="saveSnapshot('after')">保存当前状态</button></div>
 </div>
-
-<div class="section"><div><h2>外部服务连接</h2><p>逐项通过 Cloudflare Pages 后端发起请求</p></div><span class="pill" id="serviceSummary">尚未检测</span></div>
+<div class="actions"><button class="btn primary" onclick="compareSnapshots()">比较变化</button></div><div class="result" id="comparison" style="margin-top:12px">保存两次状态后即可比较公网 IP 和连接耗时。</div>
+<div class="muted">提示：请自行在 iPhone VPN 设置或 VPN 应用中切换连接状态。网页不能替你开关 VPN。</div>
+</section>
+<div class="section"><div><h2>公共服务连通性</h2><p>通过本站 Cloudflare Pages 后端检测</p></div><span class="pill" id="serviceSummary">未检测</span></div>
 <section class="panel">
 <div class="service-list" id="services">
-<div class="service"><span class="service-icon">☁️</span><div class="service-main"><b>Cloudflare</b><small>www.cloudflare.com · HTTPS / 网络边缘</small></div><span class="pill">待检测</span></div>
-<div class="service"><span class="service-icon">🔎</span><div class="service-main"><b>Google</b><small>www.google.com · HTTPS 可达性</small></div><span class="pill">待检测</span></div>
-<div class="service"><span class="service-icon">🌍</span><div class="service-main"><b>ipify</b><small>api.ipify.org · 公网 IPv4 查询</small></div><span class="pill">待检测</span></div>
-<div class="service"><span class="service-icon">📍</span><div class="service-main"><b>ipapi</b><small>ipapi.co · IP 地理信息</small></div><span class="pill">待检测</span></div>
-<div class="service"><span class="service-icon">🧭</span><div class="service-main"><b>Cloudflare DNS</b><small>cloudflare-dns.com · DNS over HTTPS</small></div><span class="pill">待检测</span></div>
-<div class="service"><span class="service-icon">🧭</span><div class="service-main"><b>Google DNS</b><small>dns.google · DNS over HTTPS</small></div><span class="pill">待检测</span></div>
-<div class="service"><span class="service-icon">🚀</span><div class="service-main"><b>Cloudflare Speed</b><small>speed.cloudflare.com · 下载测试样本</small></div><span class="pill">待检测</span></div>
-</div>
-<div class="actions"><button class="btn primary" id="servicesBtn" onclick="runServices()">检测全部 7 项服务</button></div>
-<div class="muted" style="margin-top:10px">状态、HTTP 代码和耗时以本次检测结果为准。服务端检测位置是处理请求的 Cloudflare 边缘环境，并非全球多地区节点。</div>
+<div class="service"><span class="service-icon">☁️</span><div class="service-main"><b>Cloudflare</b><small>www.cloudflare.com · HTTPS / 边缘网络</small></div><span class="pill">待检测</span></div><div class="service"><span class="service-icon">🔎</span><div class="service-main"><b>Google</b><small>www.google.com · HTTPS 可达性</small></div><span class="pill">待检测</span></div><div class="service"><span class="service-icon">🌍</span><div class="service-main"><b>ipify</b><small>api.ipify.org · 公网 IP 查询</small></div><span class="pill">待检测</span></div><div class="service"><span class="service-icon">📍</span><div class="service-main"><b>ipapi</b><small>ipapi.co · IP 地理信息</small></div><span class="pill">待检测</span></div><div class="service"><span class="service-icon">🧭</span><div class="service-main"><b>Cloudflare DNS</b><small>cloudflare-dns.com · DNS over HTTPS</small></div><span class="pill">待检测</span></div><div class="service"><span class="service-icon">🧭</span><div class="service-main"><b>Google DNS</b><small>dns.google · DNS over HTTPS</small></div><span class="pill">待检测</span></div>
+</div><div class="actions"><button class="btn primary" id="servicesBtn" onclick="runServices()">检测全部 6 项</button></div>
+<p class="muted">这是从 Cloudflare Pages 后端所在边缘环境发起的检测，不是全球多地区 VPN 节点探测。</p>
 </section>
-
-<div class="section"><div><h2>网络请求测试</h2><p>测量浏览器访问公共 HTTPS 端点的时间</p></div></div>
+<div class="section"><div><h2>浏览器连接耗时</h2><p>不是 ICMP Ping，也不是 VPN 节点延迟</p></div></div>
+<section class="panel"><div class="result" id="latencyResult">尚未测试</div><div class="actions"><button class="btn" onclick="testLatency()">测试 Cloudflare / Google</button></div></section>
+<div class="section"><div><h2>故障排查</h2></div></div>
 <section class="panel">
-<div class="result" id="latencyResult">尚未进行测试。</div>
-<div class="actions"><button class="btn" onclick="testLatency()">测试 Cloudflare / Google</button></div>
-</section>
-
-<div class="section"><div><h2>故障排查</h2><p>根据遇到的问题查看建议</p></div></div>
-<section class="panel">
-<label for="issue" class="muted">选择当前问题</label>
-<select id="issue" class="select">
-<option value="disconnect">VPN 经常自动断开</option>
-<option value="nointernet">显示已连接，但无法上网</option>
-<option value="slow">网络速度很慢</option>
-<option value="ip">连接 VPN 后公网 IP 没变化</option>
-<option value="dns">部分网站无法打开 / DNS 异常</option>
-<option value="mobile">移动数据下无法连接</option>
+<label class="muted" for="issue">选择遇到的问题</label>
+<select class="select" id="issue">
+<option value="disconnect">VPN 经常自动断开</option><option value="nointernet">显示已连接但无法上网</option><option value="slow">网络速度很慢</option><option value="ip">连接 VPN 后公网 IP 没变化</option><option value="dns">部分网站无法打开 / DNS 异常</option><option value="mobile">移动数据下无法连接</option>
 </select>
-<button class="btn primary" onclick="diagnose()">查看排查步骤</button>
-<div class="result" id="advice" style="margin-top:14px">选择问题后查看建议。</div>
+<button class="btn primary" onclick="diagnose()">查看排查步骤</button><div class="result" id="advice" style="margin-top:12px">选择问题后查看建议。</div>
 </section>
-
-<div class="section"><div><h2>功能边界</h2></div></div>
+<div class="section"><div><h2>重要限制</h2></div></div>
 <section class="panel">
-<p class="muted">这是浏览器网络诊断工具，不是 VPN 服务商，也没有连接 VPN Super 私有节点。</p>
-<p class="muted">iPhone Safari 网页无法读取系统 VPN 状态、强制自动重连、启用 Kill Switch、扫描 VPN 私有节点或保证后台持续运行。网页检测结果也不能替代完整的 DNS / WebRTC 泄漏审计。</p>
-<p class="muted">公网 IP 查询会向 ipify / ipapi 等第三方发送网络请求。请勿在本网站输入 VPN 密码、订阅链接、私钥或验证码。</p>
+<p class="muted">普通 iPhone Safari 网页不能读取系统 VPN 状态、控制自动重连、启用 Kill Switch、访问 VPN 私有节点 API、扫描 WireGuard / OpenVPN UDP 端口，或保证后台持续运行。</p>
+<p class="muted">WebRTC 检查只展示浏览器可见的 ICE 候选地址；未发现地址不代表绝对没有泄漏。外部服务检测成功也不代表 VPN 节点正常。</p>
+<p class="muted">本网站不会要求 VPN 密码、订阅链接、私钥或验证码。公网 IP 查询会向 ipify / ipapi 等第三方服务发送请求。</p>
+<div class="notice">如果你要检查 VPN 服务商的全部节点，需要服务商提供节点清单/API，或你自己的外部探测服务器。单靠网页不能可靠检测所有节点。</div>
 </section>
 <footer class="foot">VPN Super Assistant · Independent network diagnostics</footer>
 </main>
 <script>
-const $=id=>document.getElementById(id);
-let reportLines=[];
-const targets=[
-{id:"cloudflare",name:"Cloudflare",icon:"☁️",host:"www.cloudflare.com"},
-{id:"google",name:"Google",icon:"🔎",host:"www.google.com"},
-{id:"ipify",name:"ipify",icon:"🌍",host:"api.ipify.org"},
-{id:"ipapi",name:"ipapi",icon:"📍",host:"ipapi.co"},
-{id:"doh_cloudflare",name:"Cloudflare DNS",icon:"🧭",host:"cloudflare-dns.com"},
-{id:"doh_google",name:"Google DNS",icon:"🧭",host:"dns.google"},
-{id:"speed",name:"Cloudflare Speed",icon:"🚀",host:"speed.cloudflare.com"}
-];
-function stamp(){return new Date().toLocaleString()}
-function setStatus(s){$("appStatus").textContent=s}
-async function timedFetch(url,options={}){const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),10000);const start=performance.now();try{const response=await fetch(url,{...options,signal:controller.signal,cache:"no-store"});return {response,ms:Math.round(performance.now()-start)}}finally{clearTimeout(timer)}}
-async function readApi(response){const type=response.headers.get("content-type")||"";const raw=await response.text();if(!type.toLowerCase().includes("application/json"))throw new Error("API 未返回 JSON。请确认 Pages Functions 已部署，并使用 Pages 域名。");let data;try{data=JSON.parse(raw)}catch(e){throw new Error("API JSON 格式无效。")}return data}
+const $=id=>document.getElementById(id);let snapshots={before:null,after:null},report=[];
+const services=[{id:"cloudflare",name:"Cloudflare",icon:"☁️",host:"www.cloudflare.com"},{id:"google",name:"Google",icon:"🔎",host:"www.google.com"},{id:"ipify",name:"ipify",icon:"🌍",host:"api.ipify.org"},{id:"ipapi",name:"ipapi",icon:"📍",host:"ipapi.co"},{id:"doh_cloudflare",name:"Cloudflare DNS",icon:"🧭",host:"cloudflare-dns.com"},{id:"doh_google",name:"Google DNS",icon:"🧭",host:"dns.google"}];
+const stamp=()=>new Date().toLocaleString();
+function status(s){$("appStatus").textContent=s}
+async function fetchTimed(url,options={}){const c=new AbortController(),timer=setTimeout(()=>c.abort(),9000),start=performance.now();try{const response=await fetch(url,{...options,signal:c.signal,cache:"no-store"});return {response,ms:Math.round(performance.now()-start)}}finally{clearTimeout(timer)}}
+async function apiJson(response){const ct=response.headers.get("content-type")||"",raw=await response.text();if(!ct.toLowerCase().includes("application/json"))throw Error("API 未返回 JSON；请检查 Pages Functions 部署和 Pages 域名");try{return JSON.parse(raw)}catch(e){throw Error("API 返回的 JSON 无效")}}
+async function getIp(){const {response,ms}=await fetchTimed("https://api.ipify.org?format=json");if(!response.ok)throw Error("ipify HTTP "+response.status);const d=await response.json();return {ip:d.ip,ms}}
+async function getLatency(){const urls=["https://www.cloudflare.com/cdn-cgi/trace","https://www.google.com/generate_204"],out=[];for(const url of urls){const start=performance.now();try{await fetchTimed(url,{mode:"no-cors"});out.push({host:new URL(url).hostname,ms:Math.round(performance.now()-start),ok:true})}catch(e){out.push({host:new URL(url).hostname,ok:false})}}return out}
 async function runQuick(){
- const btn=$("quickBtn");btn.disabled=true;setStatus("正在进行快速诊断…");reportLines=[];
- $("ipv4").textContent="检测中…";$("ipv6").textContent="检测中…";$("httpsState").textContent="检测中…";
+ const b=$("quickBtn");b.disabled=true;status("正在检测当前网络…");report=[];
+ $("ipv4").textContent="检测中";$("ipv6").textContent="检测中";$("https").textContent="检测中";
  const tasks=[
- (async()=>{try{const {response,ms}=await timedFetch("https://api.ipify.org?format=json");if(!response.ok)throw Error("HTTP "+response.status);const data=await response.json();$("ipv4").textContent=data.ip||"已响应";$("ipMeta").textContent="ipify · "+ms+" ms";reportLines.push("IPv4: "+(data.ip||"响应成功")+" ("+ms+" ms)");try{const geo=await fetch("https://ipapi.co/json/").then(r=>r.json());$("ipMeta").textContent+=" · "+[geo.country_name,geo.org].filter(Boolean).join(" · ");reportLines.push("IP 信息: "+[geo.country_name,geo.org].filter(Boolean).join(" / "))}catch(e){}}catch(e){$("ipv4").textContent="检测失败";$("ipMeta").textContent=e.message;reportLines.push("IPv4: 失败 - "+e.message)}})(),
- (async()=>{try{const {response,ms}=await timedFetch("https://api6.ipify.org?format=json");if(!response.ok)throw Error("HTTP "+response.status);const data=await response.json();$("ipv6").textContent="可用";$("ipv6Meta").textContent=(data.ip||"IPv6 响应成功")+" · "+ms+" ms";reportLines.push("IPv6: 可用 ("+ms+" ms)")}catch(e){$("ipv6").textContent="不可用 / 被拦截";$("ipv6Meta").textContent="当前网络可能没有 IPv6 出口";reportLines.push("IPv6: 不可用或被拦截")}})(),
- (async()=>{const results=[];for(const url of ["https://www.cloudflare.com/cdn-cgi/trace","https://www.google.com/generate_204"]){try{const {response,ms}=await timedFetch(url,{mode:"no-cors"});results.push(new URL(url).hostname+" "+ms+" ms");}catch(e){results.push(new URL(url).hostname+" 请求失败")}}$("httpsState").textContent=results.some(x=>x.includes("请求失败"))?"部分失败":"可访问";$("httpsMeta").textContent=results.join(" · ");reportLines.push("HTTPS: "+results.join("; "))})()
+ (async()=>{try{const d=await getIp();$("ipv4").textContent=d.ip;$("ipv4Sub").textContent="ipify · "+d.ms+" ms";report.push("IPv4 "+d.ip+" ("+d.ms+" ms)")}catch(e){$("ipv4").textContent="检测失败";$("ipv4Sub").textContent=e.message;report.push("IPv4 失败: "+e.message)}})(),
+ (async()=>{try{const {response,ms}=await fetchTimed("https://api6.ipify.org?format=json");if(!response.ok)throw Error("HTTP "+response.status);const d=await response.json();$("ipv6").textContent="可用";$("ipv6Sub").textContent=(d.ip||"IPv6 已响应")+" · "+ms+" ms";report.push("IPv6 可用 "+(d.ip||"")+" ("+ms+" ms)")}catch(e){$("ipv6").textContent="不可用 / 被拦截";$("ipv6Sub").textContent="当前网络可能没有 IPv6 出口";report.push("IPv6 不可用或被拦截")}})(),
+ (async()=>{const r=await getLatency();const ok=r.filter(x=>x.ok).length;$("https").textContent=ok+"/2 可访问";$("httpsSub").textContent=r.map(x=>x.host+" "+(x.ms??"失败")+" ms").join(" · ");report.push("HTTPS "+r.map(x=>x.host+" "+(x.ms??"失败")+"ms").join("; "))})()
  ];
- await Promise.all(tasks);reportLines.unshift("快速诊断时间: "+stamp());setStatus("快速诊断完成 · "+stamp());btn.disabled=false;
+ await Promise.all(tasks);report.unshift("快速诊断 "+stamp());status("快速诊断完成 · "+stamp());b.disabled=false;
 }
-function renderServices(states){
- $("services").innerHTML=targets.map(t=>{const s=states[t.id]||{state:"wait",label:"待检测",detail:""};return '<div class="service"><span class="service-icon">'+t.icon+'</span><div class="service-main"><b>'+t.name+'</b><small>'+t.host+' · '+escapeHtml(s.detail||"")+'</small></div><span class="pill '+s.state+'">'+s.label+'</span></div>'}).join("");
-}
-function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function drawServices(states){$("services").innerHTML=services.map(s=>{const x=states[s.id]||{state:"wait",label:"待检测",detail:""};return '<div class="service"><span class="service-icon">'+s.icon+'</span><div class="service-main"><b>'+s.name+'</b><small>'+s.host+' · '+esc(x.detail)+'</small></div><span class="pill '+x.state+'">'+x.label+'</span></div>'}).join("")}
+function esc(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 async function runServices(){
- const btn=$("servicesBtn");btn.disabled=true;setStatus("正在检测 7 项外部服务…");$("serviceSummary").textContent="检测中";
- const states={};targets.forEach(t=>states[t.id]={state:"wait",label:"检测中",detail:"正在请求"});
- renderServices(states);
- const results=await Promise.all(targets.map(async t=>{
-  try{const {response,ms}=await timedFetch("/api/probe?target="+encodeURIComponent(t.id));const data=await readApi(response);const ok=!!data.ok;states[t.id]={state:ok?"ok":"bad",label:ok?"可用":"失败",detail:"HTTP "+response.status+" · "+(data.latencyMs??ms)+" ms"+(data.error?" · "+data.error:"")};return {id:t.id,ok,detail:states[t.id].detail}}
-  catch(e){states[t.id]={state:"bad",label:"无法检测",detail:e.message};return {id:t.id,ok:false,detail:e.message}}
- }));
- renderServices(states);const count=results.filter(x=>x.ok).length;$("serviceSummary").textContent=count+"/7 可用";reportLines.push("外部服务检测 "+stamp()+": "+results.map(r=>r.id+"="+(r.ok?"可用":"失败")+" ("+r.detail+")").join("; "));setStatus("外部服务检测完成 · "+stamp());btn.disabled=false;
+ const b=$("servicesBtn");b.disabled=true;$("serviceSummary").textContent="检测中";status("正在检测 6 项公共服务…");const states={};services.forEach(s=>states[s.id]={state:"wait",label:"检测中",detail:"请求中"});drawServices(states);
+ const results=await Promise.all(services.map(async s=>{try{const {response,ms}=await fetchTimed("/api/probe?target="+encodeURIComponent(s.id));const d=await apiJson(response);const ok=!!d.ok;states[s.id]={state:ok?"ok":"bad",label:ok?"可用":"失败",detail:"HTTP "+response.status+" · "+(d.latencyMs??ms)+" ms"+(d.error?" · "+d.error:"")};return ok}catch(e){states[s.id]={state:"bad",label:"无法检测",detail:e.message};return false}}));
+ drawServices(states);const count=results.filter(Boolean).length;$("serviceSummary").textContent=count+"/6 可用";report.push("外部服务 "+stamp()+": "+services.map(s=>s.name+" "+states[s.id].label+" ("+states[s.id].detail+")").join("; "));status("外部服务检测完成 · "+stamp());b.disabled=false;
 }
-async function testLatency(){
- $("latencyResult").textContent="正在测试…";setStatus("正在测量 HTTPS 请求时间");const lines=[];
- for(const url of ["https://www.cloudflare.com/cdn-cgi/trace","https://www.google.com/generate_204"]){try{const {ms}=await timedFetch(url,{mode:"no-cors"});lines.push(new URL(url).hostname+"：约 "+ms+" ms")}catch(e){lines.push(new URL(url).hostname+"：请求失败或被拦截")}}
- $("latencyResult").textContent=lines.join("\n")+"\n提示：这是 HTTPS 请求耗时，不是 ICMP Ping，也不是 VPN 节点延迟。";reportLines.push("HTTPS 请求测试: "+lines.join("; "));setStatus("请求测试完成");
+async function testLatency(){status("正在测试 HTTPS 请求…");$("latencyResult").textContent="测试中…";const r=await getLatency();$("latencyResult").textContent=r.map(x=>x.host+"："+(x.ok?x.ms+" ms":"请求失败或被拦截")).join("\n")+"\n这是浏览器 HTTPS 请求耗时，不是 ICMP Ping 或 VPN 节点延迟。";report.push("延迟 "+JSON.stringify(r));status("请求测试完成")}
+async function saveSnapshot(which){
+ const b=$(which+"Btn");b.disabled=true;$(which).textContent="正在采集…";
+ try{const [ip,lat]=await Promise.all([getIp(),getLatency()]);const v6=await fetchTimed("https://api6.ipify.org?format=json").then(async x=>x.response.ok?(await x.response.json()).ip:null).catch(()=>null);snapshots[which]={time:stamp(),ip:ip.ip,ipMs:ip.ms,v6,lat};$(which).textContent="时间："+snapshots[which].time+"\nIPv4："+ip.ip+"\nIPv6："+(v6||"不可用")+"\nHTTPS："+lat.map(x=>x.host+" "+(x.ms??"失败")+"ms").join(" / ");report.push((which==="before"?"未连接 VPN":"已连接 VPN")+"快照 "+JSON.stringify(snapshots[which]));}catch(e){$(which).textContent="采集失败："+e.message}finally{b.disabled=false}
 }
-function diagnose(){
- const tips={
- disconnect:"• 检查 VPN 应用内的自动连接 / 重连设置。\n• 分别测试 Wi-Fi 与蜂窝网络。\n• 检查 iOS 设置中的 VPN 配置是否仍有效。\n• Safari 后台网页无法替 VPN 保持隧道。",
- nointernet:"• 断开 VPN，确认普通网络本身可上网。\n• 重新连接 VPN，并检查应用内分流与 DNS 设置。\n• 对比本页公网 IP 和 HTTPS 测试。\n• 如果只有特定网站失败，尝试更换应用内服务器。",
- slow:"• 对比连接 VPN 前后的 HTTPS 请求时间。\n• 检查 Wi-Fi / 蜂窝信号和后台下载。\n• 在 VPN 应用内更换可选服务器或协议。\n• 本页请求耗时不等于真实带宽或节点 Ping。",
- ip:"• 重新运行公网 IPv4 检测。\n• 检查 VPN 是否启用了分流或仅代理部分应用。\n• 确认测试的是 Safari 流量且 VPN 已显示连接。\n• 联系 VPN 服务商确认出口策略。",
- dns:"• 检查 VPN 应用内 DNS / DNS 保护设置。\n• 检查 iPhone 是否配置了自定义 DNS 或内容过滤器。\n• 使用可信的 DNS 泄漏测试网站复核。\n• 本网页无法直接读取 iOS 系统 DNS 服务器。",
- mobile:"• 在 iPhone 设置中确认 VPN 应用允许使用蜂窝数据。\n• 检查移动数据是否可正常访问互联网。\n• 开关飞行模式后重新连接。\n• 对比 Wi-Fi 和蜂窝网络下的检测结果。"
- };
- $("advice").textContent=tips[$("issue").value]||"暂无建议";
+function compareSnapshots(){const a=snapshots.before,b=snapshots.after;if(!a||!b){$("comparison").textContent="请先断开 VPN 保存“未连接 VPN”，再连接 VPN 保存“已连接 VPN”。";return}const changed=a.ip!==b.ip;const lines=["公网 IPv4："+a.ip+" → "+b.ip,changed?"结果：出口 IP 已变化。":"结果：出口 IP 没有变化。","IPv6："+(a.v6||"不可用")+" → "+(b.v6||"不可用")];for(const host of ["www.cloudflare.com","www.google.com"]){const x=a.lat.find(z=>z.host===host),y=b.lat.find(z=>z.host===host);if(x&&y&&x.ms&&y.ms)lines.push(host+" 请求耗时："+x.ms+" → "+y.ms+" ms")}lines.push("注意：出口 IP 未变化不一定表示 VPN 失效；分流、代理模式和 VPN 出口策略都可能影响结果。");$("comparison").textContent=lines.join("\n")}
+async function testWebRTC(){
+ if(!window.RTCPeerConnection){$("latencyResult").textContent="当前浏览器不支持 WebRTC";return}
+ $("latencyResult").textContent="正在收集 ICE 候选地址…";status("WebRTC 检查中");
+ await new Promise(resolve=>{const pc=new RTCPeerConnection({iceServers:[{urls:"stun:stun.l.google.com:19302"}]}),found=new Set();let ended=false;const finish=()=>{if(ended)return;ended=true;pc.close();const result=found.size?"发现的候选地址：\n"+[...found].join("\n"):"未发现可显示的 ICE 地址候选。";$("latencyResult").textContent=result+"\n注意：浏览器可能隐藏或限制地址；未发现候选不等于无泄漏。";report.push("WebRTC: "+result);status("WebRTC 检查完成");resolve()};pc.onicecandidate=e=>{if(!e.candidate){finish();return}const c=e.candidate.candidate;const m=c.match(/(?:\d{1,3}\.){3}\d{1,3}|(?:[0-9a-f]{1,4}:){2,}[0-9a-f:]{0,}/i);if(m)found.add(m[0])};pc.createDataChannel("diag");pc.createOffer().then(o=>pc.setLocalDescription(o)).catch(finish);setTimeout(finish,6000)});
 }
-function exportReport(){
- const text=["VPN Super Assistant 诊断报告","导出时间: "+stamp(),"",...(reportLines.length?reportLines:["尚无检测记录"]),"","注意：检测结果仅代表本次浏览器或 Cloudflare 边缘请求，不代表 VPN 私有节点状态。"].join("\n");
- const blob=new Blob([text],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="vpn-super-assistant-report.txt";a.click();URL.revokeObjectURL(url);
-}
-</script>
-</body>
-</html>
+function diagnose(){const tips={
+disconnect:"• 检查 VPN 应用内自动连接 / 重连设置。\n• 对比 Wi-Fi 和蜂窝网络。\n• 检查 iOS 设置中的 VPN 配置。\n• Safari 网页不能替代系统级保活。",
+nointernet:"• 先断开 VPN，确认普通网络可用。\n• 重新连接后检查应用内分流和 DNS。\n• 运行本页公网 IP 与 HTTPS 检测。\n• 仅部分网站失败时尝试更换 VPN 应用内服务器。",
+slow:"• 对比 VPN 前后 HTTPS 请求耗时。\n• 检查网络信号和后台下载。\n• 尝试 VPN 应用内其他服务器或协议。\n• 本页没有真实带宽或节点 Ping 测量。",
+ip:"• 重新查询公网 IPv4。\n• 检查 VPN 是否启用了分流。\n• 确保 Safari 流量经过 VPN。\n• 向服务商确认出口 IP 策略。",
+dns:"• 检查 VPN 应用内 DNS 保护设置。\n• 检查 iPhone 自定义 DNS / 内容过滤器。\n• 使用可信 DNS 泄漏测试复核。\n• 本网页无法读取系统 DNS 配置。",
+mobile:"• 确认 VPN 应用允许使用蜂窝数据。\n• 检查移动数据本身是否可上网。\n• 开关飞行模式后重新连接。\n• 对比 Wi-Fi 与蜂窝网络结果。"};$("advice").textContent=tips[$("issue").value]}
+function exportReport(){const content=["VPN Super Assistant 报告","导出时间："+stamp(),"",...(report.length?report:["尚无检测记录"]),"","说明：浏览器与边缘服务检测不代表 VPN 私有节点状态。"].join("\n");const u=URL.createObjectURL(new Blob([content],{type:"text/plain;charset=utf-8"}));const a=document.createElement("a");a.href=u;a.download="vpn-diagnostic-report.txt";a.click();URL.revokeObjectURL(u)}
+</script></body></html>
