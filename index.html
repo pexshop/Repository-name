@@ -20,6 +20,21 @@
 <button class="card tool" onclick="run('services')">🔗<strong>外部服务健康检查</strong><small>检测 Cloudflare、Google、IP 与 DoH 服务</small></button>
 <button class="card tool" onclick="run('dns')">🧭<strong>DNS 检查说明</strong><small>解释网页检测限制</small></button>
 </section>
+<div class="section">外部服务连接清单</div>
+<section class="card">
+<p class="muted">本网站不会绑定第三方账号或 VPN 账户。以下是网站实际调用的公开服务；点击“检测全部服务”后，逐项显示实时连通状态。</p>
+<div class="catalog">
+<div class="item"><span>☁️</span><span><b>Cloudflare</b><small>www.cloudflare.com · HTTPS 连通性、边缘网络信息及测速</small></span><span class="muted">后端 + 浏览器</span></div>
+<div class="item"><span>🔎</span><span><b>Google</b><small>www.google.com · HTTPS 可达性测试</small></span><span class="muted">后端 + 浏览器</span></div>
+<div class="item"><span>🌐</span><span><b>ipify</b><small>api.ipify.org · 查询公网 IPv4 地址</small></span><span class="muted">后端 + 浏览器</span></div>
+<div class="item"><span>📍</span><span><b>ipapi</b><small>ipapi.co · 查询 IP 国家/地区和网络组织</small></span><span class="muted">后端 + 浏览器</span></div>
+<div class="item"><span>🧭</span><span><b>Cloudflare DNS over HTTPS</b><small>cloudflare-dns.com · DNS JSON 查询</small></span><span class="muted">后端</span></div>
+<div class="item"><span>🧭</span><span><b>Google DNS over HTTPS</b><small>dns.google · DNS JSON 查询</small></span><span class="muted">后端</span></div>
+<div class="item"><span>🚀</span><span><b>Cloudflare Speed</b><small>speed.cloudflare.com · 下载测速样本</small></span><span class="muted">后端</span></div>
+</div>
+<div class="row" style="margin-top:12px"><button class="primary" onclick="run('services')">检测全部服务</button><span class="muted">状态以实际检测结果为准</span></div>
+<div class="notice">说明：后端检测由 Cloudflare Pages Functions 发起，通常从 Cloudflare 边缘环境访问这些服务；这不代表 VPN 节点、全球多地探测服务器或第三方账号已连接。</div>
+</section>
 <section class="card" style="margin-top:12px"><b>检测结果</b><div id="result" class="result">选择一个工具开始检测。</div><div class="row" style="margin-top:9px"><button onclick="copyResult()">复制结果</button><button onclick="clearResult()">清除</button><button onclick="downloadReport()">导出报告</button></div></section>
 <div class="section">持续连通性监测</div><section class="card"><p class="muted">每 15 秒请求一次 HTTPS 测试端点。iOS 切换后台或锁屏时可能暂停网页计时器。</p><div class="row"><button class="primary" id="monitorBtn" onclick="toggleMonitor()">开始监测</button><span id="monitorState" class="muted">未运行</span></div><div id="monitor" class="result">暂无记录</div></section>
 <div class="section">50 项工具目录</div><section class="card catalog" id="catalog"></section>
